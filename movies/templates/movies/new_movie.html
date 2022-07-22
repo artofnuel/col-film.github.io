@@ -1,29 +1,27 @@
+{% extends "movies/base.html" %}
+
 {% block content %}
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Add a new Movie.</title>
-    </head>
-    <body>
-		<div style="width: 500px; margin: auto;">
-			<fieldset name="Video File Upload and Display">
-				{% if msg %} {% autoescape off %} {{ msg }} {% endautoescape %} {% endif %}
-				<form method="post" action="{% url 'movies:new_movie' %}" enctype="multipart/form-data">
-					{% csrf_token %}
-					<dl>
-						<p>
-							<label>Browse and select a video file</label>&nbsp;&nbsp;
-							<input type="text" name="title" autocomplete="off" required>
-							<input type="file" name="video" autocomplete="off" required>
-						</p>
-					</dl>
-					<p>
-						<input type="submit" value="Upload">
-					</p>
-				</form>
-			</fieldset> 
-		</div>	
-    </body>
-</html>
+<fieldset name="Video File Upload and Display">
+	{% if msg %} {% autoescape off %} {{ msg }} {% endautoescape %} {% endif %}
+	<form method="post" action="{% url 'movies:new_movie' %}" enctype="multipart/form-data">
+		{% csrf_token %}
+		<dl>
+			<p>
+				<label>Add Video Title</label>&nbsp;&nbsp;
+				<br>
+				<input type="text" name="title" autocomplete="off" >
+				<br>
+				<br>
+				<label>Browse and select a video file</label>&nbsp;&nbsp;
+				<br>
+				<input type="file" name="video" autocomplete="off" required>
+			</p>
+		</dl>
+		<p>
+			<input type="submit" value="Upload">
+		</p>
+	</form>
+</fieldset> 	
+
 {% endblock content %}
