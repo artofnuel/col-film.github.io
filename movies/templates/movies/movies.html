@@ -3,7 +3,23 @@
 {% block content %}
 
 
-<h1>Slider of a random post</h1>
+<h1>One random Movie for anyone (including non signed in user) to watch</h1>
+
+<div style="margin: 10px auto;">
+    <video autoplay="autoplay" controls controlsList="nodownload preload="preload">
+        <source src="{{ MEDIA_URL }}/{{ movie.video }}" type="video/mp4"></source>
+    </video>
+</div> 
+
+<h1>Lists of all posts Displayed by a freeze of the video (Ideally if you click on any image, ypou should prompt to register/login to watch the clocked video)</h1>
+{% for movie in movies %}
+    <a href="{% url 'movies:view_movie' movie.id %}">
+        <video width="320" height="240" controlsList="nodownload">
+            <source src="{{ MEDIA_URL }}/{{ movie.video }}" type="video/mp4">   
+        </video>
+    </a> 
+{% endfor %}
+
 
 <div style="width: 100%; margin-top: 0px">
     <a href="{% url 'movies:view_movie' movie.id %}">
@@ -12,14 +28,5 @@
         </video>
     </a> 
 </div>
-
-<h1>Lists of all posts</h1>
-{% for movie in movies %}
-    <a href="{% url 'movies:view_movie' movie.id %}">
-        <video width="320" height="240" controlsList="nodownload">
-            <source src="{{ MEDIA_URL }}/{{ movie.video }}" type="video/mp4">   
-        </video>
-    </a> 
-{% endfor %}
 
 {% endblock content %}

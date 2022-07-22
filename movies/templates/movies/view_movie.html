@@ -4,7 +4,7 @@
 
 <h3>{{ movie.title }}</h3>
     <div style="margin: 10px auto;">
-        <video autoplay="autoplay" controls="controls" preload="preload">
+        <video autoplay="autoplay" controls controlsList="nodownload preload="preload">
             <source src="{{ MEDIA_URL }}/{{ movie.video }}" type="video/mp4"></source>
         </video>
     </div>  
