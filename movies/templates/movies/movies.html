@@ -1,0 +1,16 @@
+{% extends "movies/base.html" %}
+
+{% block content %}
+
+<h3>{{ movie.title }}</h3>
+
+{% for movie in movies %}
+
+    <video width="320" height="240" controls>
+        <source src="{{ MEDIA_URL }}/{{ movie.video }}" type="video/mp4">   
+    </video>
+    <a href="{% url 'movies:view_movie' movie.id %}">View</a> 
+
+{% endfor %}
+
+{% endblock content %}
