@@ -1,0 +1,15 @@
+{% block content %}
+
+<h3>{{ movie.title }}</h3>
+
+{% for movie in movies %}
+    <div style="margin: 10px auto; width: 450px; height: auto;">
+        <video autoplay="autoplay" controls="controls" preload="preload">
+            <source src="{{ MEDIA_URL }}/{{ movie.video }}" type="video/mp4"></source>
+        </video>
+        
+        <h2><a href="{% url 'movies:view_movie' movie.id %}">View</a></h2>
+    </div> 
+{% endfor %}
+
+{% endblock content %}
