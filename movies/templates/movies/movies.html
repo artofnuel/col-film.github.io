@@ -2,15 +2,24 @@
 
 {% block content %}
 
-<h3>{{ movie.title }}</h3>
 
+<h1>Slider of a random post</h1>
+
+<div style="width: 100%; margin-top: 0px">
+    <a href="{% url 'movies:view_movie' movie.id %}">
+        <video width="640" height="480" controlsList="nodownload">
+            <source src="{{ MEDIA_URL }}/{{ movie.video }}" type="video/mp4">   
+        </video>
+    </a> 
+</div>
+
+<h1>Lists of all posts</h1>
 {% for movie in movies %}
-
-    <video width="320" height="240" controls>
-        <source src="{{ MEDIA_URL }}/{{ movie.video }}" type="video/mp4">   
-    </video>
-    <a href="{% url 'movies:view_movie' movie.id %}">View</a> 
-
+    <a href="{% url 'movies:view_movie' movie.id %}">
+        <video width="320" height="240" controlsList="nodownload">
+            <source src="{{ MEDIA_URL }}/{{ movie.video }}" type="video/mp4">   
+        </video>
+    </a> 
 {% endfor %}
 
 {% endblock content %}
