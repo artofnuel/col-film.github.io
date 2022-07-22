@@ -18,14 +18,12 @@ def new_movie(request):
         form = MovieForm()
     else:
         form = MovieForm(request.POST or None, request.FILES or None)
-
         if form.is_valid():
             form.save()
-            #return redirect("movies:index")
+        return redirect("movies:all_movies")
     
     context = {"form" : form}
     return render(request, "movies/new_movie.html", context)
-
 
 def all_movies(request):
     """Handles new movie uploads"""
