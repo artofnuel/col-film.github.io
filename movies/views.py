@@ -6,6 +6,7 @@ from django.shortcuts import redirect, render
 from .forms import MovieForm
 from .models import Movie
 
+import random
 
 def index(request):
     """Returns to the Homepage"""
@@ -29,7 +30,10 @@ def new_movie(request):
 def all_movies(request):
     """Handles new movie uploads"""
     movies = Movie.objects.all()
-    context = {"movies" : movies}
+
+    movie = random.choice(movies)
+
+    context = {"movies" : movies, "movie" : movie}
     return render(request, "movies/movies.html", context)
 
 def view_movie(request, movie_id):
