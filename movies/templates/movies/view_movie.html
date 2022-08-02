@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load static %}
+
 
 {% block content %}
 
@@ -31,7 +33,12 @@
 {% for comment in comments %}
     <ul>
         <li> 
-            <a href="{{ movie.author }}"><img style="width:50px;" src="{{ comment.comment_author.userinfo.avatar.url }}" alt="{{ comment.comment_author }} avatar"></a>
+            {% if comment.comment_author.userinfo.avatar %}
+                <a href="{{ movie.author }}"><img style="width:50px;" src="{{ comment.comment_author.userinfo.avatar.url }}" alt="{{ comment.comment_author }} avatar"></a>
+            {% else %}
+                nawa <a href="{{ movie.author }}"><img src="{% static 'dummy.png' %}" alt="My image"></a>  
+            {% endif %}
+
             <br>
             Comment Author: <a href="{{ movie.author }}">{{ comment.comment_author }}</a>
             <p>Comment Author Type - {{ comment.comment_author.userinfo.user_type }} </p>
