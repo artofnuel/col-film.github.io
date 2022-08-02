@@ -19,6 +19,7 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 app_name = 'movies'
 urlpatterns = [
     path('', views.index, name='index'),
@@ -27,7 +28,14 @@ urlpatterns = [
     
     path('movies/', views.all_movies, name='all_movies'),
     
-    path('view_movie/<int:movie_id>', views.view_movie,name='view_movie'),
+    path('view_movie/<int:movie_id>', views.view_movie, name='view_movie'),
+
+    path('view_movie/<int:movie_id>/new_comment/', views.new_comment, name='new_comment'),
+
+    path('edit_comment/<int:comment_id>/', views.edit_comment, name='edit_comment'),
+
+    #path('accounts/', include('django.contrib.auth.urls')),
+
+    # path("accounts/register/", views.register, name="register"),
+
 ]
-
-

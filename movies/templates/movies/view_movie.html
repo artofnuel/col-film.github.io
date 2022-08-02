@@ -1,4 +1,4 @@
-{% extends "movies/base.html" %}
+{% extends "base.html" %}
 
 {% block content %}
 
@@ -8,9 +8,42 @@
             <source src="{{ MEDIA_URL }}/{{ movie.video }}" type="video/mp4"></source>
         </video>
     </div>  
+
     <div style="margin: 10px auto;">
-        <h1>
-            <a href="{{movie.video.url}}">Download</a>
-        </h1> 
-    </div> 
+        <ul>
+            <li>
+                Movie Author: <a href="{{movie.author }}">{{movie.author}}</a>
+            </li>
+            <li>
+                {% if movie.description %}
+                    Movie Description: {{movie.description }}
+                {% else %}
+                    Movie Description: No Description has been added to this video!
+                {% endif %}
+            </li>
+            <li><a href="{{movie.video.url}}">Download</a></li>
+            <li><a href="{% url 'movies:new_comment' movie.id %}">Add Comment</a></li>
+
+        </ul>
+    </div>
+
+<h1>Comments</h1>
+{% for comment in comments %}
+    <ul>
+        <li> 
+            <a href="{{ movie.author }}"><img style="width:50px;" src="{{ comment.comment_author.userinfo.avatar.url }}" alt="{{ comment.comment_author }} avatar"></a>
+            <br>
+            Comment Author: <a href="{{ movie.author }}">{{ comment.comment_author }}</a>
+            <p>Comment Author Type - {{ comment.comment_author.userinfo.user_type }} </p>
+            <p><strong>Date Published</strong> - {{ comment.date_added }}</p>
+            <p>Comment Text: {{ comment.comment_text}} </p>
+
+            {% if request.user == comment.comment_author %}
+                <a href="{% url 'movies:edit_comment' comment.id %}">Edit Comment</a>
+            {% else %}
+
+            {% endif %}
+        </li>
+    </ul>
+{% endfor %}
 {% endblock content %}

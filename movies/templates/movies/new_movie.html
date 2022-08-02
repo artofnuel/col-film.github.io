@@ -1,4 +1,4 @@
-{% extends "movies/base.html" %}
+{% extends "base.html" %}
 
 {% block content %}
 
@@ -7,16 +7,25 @@
 	<form method="post" action="{% url 'movies:new_movie' %}" enctype="multipart/form-data">
 		{% csrf_token %}
 		<dl>
-			<p>
+			<!-- <p>
 				<label>Add Video Title</label>&nbsp;&nbsp;
 				<br>
 				<input type="text" name="title" autocomplete="off" >
 				<br>
 				<br>
+				<label>Add Video Description</label>&nbsp;&nbsp;
+				<br>
+				<input type="text" name="Description" autocomplete="on">
+				<br>
+				<br>
 				<label>Browse and select a video file</label>&nbsp;&nbsp;
 				<br>
 				<input type="file" name="video" autocomplete="off" required>
-			</p>
+			</p> -->
+
+			{{ form.as_p }}
+
+
 		</dl>
 		<p>
 			<input type="submit" value="Upload">

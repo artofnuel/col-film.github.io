@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
 
     'movies',
+    'accounts',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,8 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -106,7 +106,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -130,6 +129,24 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #Me
-MEDIA_URL= '/media/'
-MEDIA_ROOT= os.path.join(BASE_DIR, 'media/')
 
+MEDIA_URL='/media/'
+MEDIA_ROOT=BASE_DIR/'media'
+STATIC_ROOT = BASE_DIR/'static_root'
+
+STATICFILES_DIRS=[
+    BASE_DIR/'static'
+]
+
+# Auth Settings 
+# AUTH_USER_MODEL = 'movies.CustomUser'
+
+LOGIN_REDIRECT_URL = "movies:index"
+
+LOGOUT_REDIRECT_URL = "movies:index"
+
+
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
+}
