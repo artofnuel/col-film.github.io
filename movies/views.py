@@ -7,7 +7,7 @@ from .decorators import student_only
 
 # Create your views here.
 from .forms import MovieForm, MovieCommentForm
-from .models import Movie, MovieComment
+from .models import Movie, MovieComment, Like
 from django.http import Http404
 
 #Check that the topic owner is the one requesting
@@ -94,7 +94,56 @@ def view_movie(request, movie_id):
     """Handles new movie uploads"""
     movie = Movie.objects.get(id=movie_id)
 
+    fav = bool
+
+    if movie.favourites.filter(id=request.user.id).exists():
+
+        fav = True
+
+    lik = bool
+
+    if movie.liked.filter(id=request.user.id).exists():
+        lik = True
+
+
     comments = movie.moviecomment_set.order_by('-date_added')   
     
-    context = {"movie" : movie, "comments" : comments }
+    context = {"movie" : movie, "comments" : comments, "fav" : fav, "lik" : lik}
     return render(request, "movies/view_movie.html", context)
+
+@login_required
+def like_movie(request, movie_id):
+    movie = Movie.objects.get(id=movie_id)
+    if movie.liked.filter(id=request.user.id).exists():
+        movie.liked.remove(request.user)
+    else:
+        movie.liked.add(request.user)
+    return redirect('movies:view_movie', movie_id = movie_id)
+
+@login_required
+def view_profile(request, movie_id):
+    movie = Movie.objects.get(id=movie_id)
+
+    user = movie.author
+
+    movies = Movie.objects.filter(author=user)
+
+    favourites = Movie.objects.filter(favourites=user)
+
+    context = {'favourites' : favourites, 'movies' : movies, 'user' : user}
+
+    return render(request, 'movies/viewprofile.html', context)
+
+@login_required
+def view_comment_profile(request,comment_id):
+    comment = MovieComment.objects.get(id=comment_id)
+    
+    user = comment.comment_author
+
+    movies = Movie.objects.filter(author=user)
+
+    favourites = Movie.objects.filter(favourites=user)
+
+    context = {'favourites' : favourites, 'movies' : movies, 'user' : user}
+
+    return render(request, 'movies/viewprofile.html', context)

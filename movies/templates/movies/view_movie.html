@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 
-
 {% block content %}
 
 <h3>{{ movie.title }}</h3>
@@ -14,15 +13,42 @@
     <div style="margin: 10px auto;">
         <ul>
             <li>
-                Movie Author: <a href="{{movie.author }}">{{movie.author}}</a>
+                Movie Author: <a href="{% url 'movies:view_profile' movie.id %}">{{movie.author}}</a>
             </li>
             <li>
                 {% if movie.description %}
-                    Movie Description: {{movie.description }}
+                    Movie Description: {{ movie.description }}
                 {% else %}
                     Movie Description: No Description has been added to this video!
                 {% endif %}
             </li>
+
+            <li>
+                <form action="{% url 'movies:like_movie' movie.id %}" method="POST">
+                    {% csrf_token %}
+                    {% if lik  %}
+                        <button style="background-color: red;" type="submit">Unlike</button>
+                    {% else %}
+                        <button style="background-color: greenyellow;" type="submit">Like</button>
+                    {% endif %}
+                </form>`
+                {% if movie.liked.count < 1 %}
+                    No Likes Yet!
+                {% elif movie.liked.count == 1 %}
+                    1 Like
+                {% else %}
+                <strong>{{ movie.liked.count }} Likes </strong>
+                {% endif %}
+            </li>
+
+            <li>
+                {% if fav %}
+                    <a href="{% url 'accounts:add_favourite' movie.id %}">Remove from Favourites</a>
+                {% else %}
+                    <a href="{% url 'accounts:add_favourite' movie.id %}">Add to Favourites</a>
+                {% endif %}
+            </li>
+                
             <li><a href="{{movie.video.url}}">Download</a></li>
             <li><a href="{% url 'movies:new_comment' movie.id %}">Add Comment</a></li>
 
@@ -40,7 +66,7 @@
             {% endif %}
 
             <br>
-            Comment Author: <a href="{{ movie.author }}">{{ comment.comment_author }}</a>
+            Comment Author: <a href="{% url 'movies:view_commenter' comment.id %}">{{ comment.comment_author }}</a>
             <p>Comment Author Type - {{ comment.comment_author.userinfo.user_type }} </p>
             <p><strong>Date Published</strong> - {{ comment.date_added }}</p>
             <p>Comment Text: {{ comment.comment_text}} </p>

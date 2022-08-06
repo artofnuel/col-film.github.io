@@ -9,4 +9,11 @@ urlpatterns = [
 
     #Register Page
     path('register/', views.register, name='register'),
+
+    path('profile/', views.profile, name='profile'),
+
+    path('profile/favourites/', views.list_favourites, name='list_favourites'),
+
+    path('favourites/<int:movie_id>', views.add_favourite, name='add_favourite'),
+
 ]

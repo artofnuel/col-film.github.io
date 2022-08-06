@@ -29,6 +29,12 @@ urlpatterns = [
     path('movies/', views.all_movies, name='all_movies'),
     
     path('view_movie/<int:movie_id>', views.view_movie, name='view_movie'),
+    
+    path('view-profile/<int:movie_id>/', views.view_profile, name='view_profile'),
+
+    path('viewcommentprofile/<int:comment_id>/', views.view_comment_profile, name='view_commenter'),   
+
+    path('like/<int:movie_id>/', views.like_movie, name='like_movie'),
 
     path('view_movie/<int:movie_id>/new_comment/', views.new_comment, name='new_comment'),
 
